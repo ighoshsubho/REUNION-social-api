@@ -23,14 +23,14 @@ export const createPost = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const savedPost: IPost = await newPost.save();
 
-    res.json({
+    return res.json({
       id: savedPost._id,
       title: savedPost.title,
       description: savedPost.description,
       createdTime: savedPost.createdAt.toUTCString(),
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -53,3 +53,46 @@ export const deletePost = async (req: AuthenticatedRequest, res: Response, next)
         next(err);
       }
 }
+
+export const getAllPosts = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const posts: IPost[] = await Post.find({user: req.user._id })
+        .sort({ createdAt: -1 })
+        .populate("comments")
+        .lean()
+        .exec();
+  
+      const transformedPosts = posts.map((post) => {
+        return {
+          id: post._id,
+          title: post.title,
+          desc: post.description,
+          created_at: post.createdAt,
+          comments: post.comments,
+          likes: post.likes.length,
+        };
+      });
+  
+      return res.status(200).json(transformedPosts);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
+  
+  export const getPost = async (req: Request, res: Response) => {
+    const postId = req.params.id;
+  
+    try {
+      const post: IPost | null = await Post.findById(postId).populate('user', 'username').populate('likes').populate('comments');
+      if (post) {
+        return res.status(200).json({ success: true, post });
+      } else {
+        return res.status(404).json({ success: false, error: 'Post not found' });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ success: false, error: 'Server error' });
+    }
+  };

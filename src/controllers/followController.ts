@@ -32,7 +32,7 @@ export const followUser: RequestHandler = async (req: AuthenticatedRequest, res:
   }
 };
 
-export const unfollowUser = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const unfollowUser = async (req: AuthenticatedRequest, res: Response) => {
     try {
       const currentUser = req.params;
       const userToUnfollow = await User.findById(currentUser);
@@ -51,9 +51,9 @@ export const unfollowUser = async (req: AuthenticatedRequest, res: Response): Pr
       userToUnfollow.followers.pop(userId);
       await userToUnfollow.save();
   
-      res.json({ message: 'Unfollowed successfully' });
+      return res.json({ message: 'Unfollowed successfully' });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Server error' });
+      return res.status(500).json({ message: 'Server error' });
     }
   };

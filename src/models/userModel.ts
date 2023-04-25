@@ -2,6 +2,8 @@ import { Schema } from 'mongoose';
 import mongoose from 'mongoose';
 
 export interface UserDoc extends mongoose.Document {
+  _id: string;
+  name: string;
   email: string;
   password: string;
   followers: string[];

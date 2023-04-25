@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes';
 import followRoutes from './routes/followRoutes';
 import userRoute from './routes/userRoute';
 import postRoute from './routes/postRoute';
+import likeRoute from './routes/likeRoute';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use('/api', authRoutes);
 app.use('/api', followRoutes);
 app.use('/api', userRoute);
 app.use('/api', postRoute);
+app.use('/api', likeRoute);
 
 // Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -3,11 +3,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { User, UserDoc } from '../models/userModel';
 
-interface LoginInput {
-  email: string;
-  password: string;
-}
-
 interface LoginResponse {
   token: string;
   message: string;

@@ -1,11 +1,16 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { ILike } from './likeModel';
+import { IComment } from './commentModel';
 
 export interface IPost extends Document {
     _id: string;
     title: string;
     description: string;
     createdAt?: Date;
+    user: string;
     save: () => Promise<IPost>;
+    likes: ILike[];
+    comments: IComment[];
   }
 
 const PostSchema: Schema = new Schema({
