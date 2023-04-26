@@ -12,7 +12,7 @@ interface AuthenticatedRequest extends Request {
 
 export const createPost = async (req: AuthenticatedRequest, res: Response) => {
   const { title, description } = req.body;
-  const userId = req.user.id;
+  const userId = req.params.id;
 
   const newPost: IPost = new Post({
     title,
@@ -42,7 +42,7 @@ export const deletePost = async (req: AuthenticatedRequest, res: Response, next)
           return res.status(404).json({ message: 'Post not found' });
         }
     
-        if (post.author.toString() !== req.user._id.toString()) {
+        if (post.user.toString() !== req.user._id.toString()) {
           return res.status(401).json({ message: 'You are not authorized to delete this post' });
         }
     

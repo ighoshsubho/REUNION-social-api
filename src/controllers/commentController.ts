@@ -12,7 +12,7 @@ export const addComment = async (req: AuthenticatedRequest, res: Response): Prom
   try {
     const { comment } = req.body;
     const postId = req.params.id;
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     const postToComment = await Comment.findById({postId:postId});
 

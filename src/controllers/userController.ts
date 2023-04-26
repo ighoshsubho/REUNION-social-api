@@ -9,7 +9,7 @@ interface AuthenticatedRequest extends Request {
 
 export const getUserProfile = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.params.id;
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });

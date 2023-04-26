@@ -8,9 +8,9 @@ export interface IPost extends Document {
     description: string;
     createdAt?: Date;
     user: string;
-    save: () => Promise<IPost>;
     likes: ILike[];
     comments: IComment[];
+    remove: () => Promise<IPost>;
   }
 
 const PostSchema: Schema = new Schema({

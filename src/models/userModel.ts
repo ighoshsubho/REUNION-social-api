@@ -7,14 +7,16 @@ export interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   followers: string[];
-  following: number;
+  following: string[];
 }
 
 const userSchema = new mongoose.Schema<UserDoc>({
+  _id: { type: String, required: true },
+  name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
   followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  following: { type: Number, default: 0 },
+  following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 export const User = mongoose.model<UserDoc>('User', userSchema);
