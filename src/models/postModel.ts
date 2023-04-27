@@ -3,6 +3,7 @@ import { ILike } from './likeModel';
 import { IComment } from './commentModel';
 
 export interface IPost extends Document {
+    save: any;
     _id: string;
     title: string;
     description: string;

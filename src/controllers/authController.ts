@@ -13,7 +13,7 @@ interface LoginResponse {
 export const login: RequestHandler = async (req, res, next) => {
     const { email, password } = req.body;
     try {
-      const user = await User.findOne({ email:email });
+      const user = await User.findOne({ email });
       if (!user) {
         return res.status(401).json({ message: 'Invalid user' });
       }
